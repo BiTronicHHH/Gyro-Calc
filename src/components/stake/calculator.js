@@ -61,6 +61,7 @@ const GetValueButton = styled(Button)`
     border-radius: 6px;
     font-weight: 600;
     font-size: 16px;
+    font-family: "Montserrat";
     line-height: 20px;
     width: 120px;
 `
