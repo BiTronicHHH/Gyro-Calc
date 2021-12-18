@@ -33,7 +33,7 @@ const StyledSlider = styled(SliderUnstyled)`
     display: block;
     position: absolute;
     width: 100%;
-    height: 6px;
+    height: 7px;
     border-radius: 6px;
     background-color: transparent;
     opacity: 0.38;
@@ -43,7 +43,7 @@ const StyledSlider = styled(SliderUnstyled)`
   & .MuiSlider-track {
     display: block;
     position: absolute;
-    height: 6px;
+    height: 7px;
     background: linear-gradient(90deg, #FF2680 4.22%, #932CE3 93.12%);
     border-radius: 10px;
   }
@@ -53,7 +53,7 @@ const StyledSlider = styled(SliderUnstyled)`
     width: 20px;
     height: 20px;
     margin-left: -6px;
-    margin-top: -7px;
+    margin-top: -6.5px;
     box-sizing: border-box;
     border-radius: 50%;
     outline: 0;

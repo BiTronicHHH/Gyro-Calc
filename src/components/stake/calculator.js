@@ -5,6 +5,7 @@ import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
 import SliderUnstyled from '@mui/base/SliderUnstyled';
 import styled from 'styled-components';
+import { trim } from "../../util/trim";
 import './css/calculator.css';
 import InputGroup from './components/inputGroup';
 import Slider from './components/slider';
@@ -17,8 +18,10 @@ export default function Calculator() {
     const [sGyroBalance, setsGyroBalance] = useState(0);
     const [gyroAPY, setGyroAPY ] = useState (0);
     const [gyroCurrentAPY, setGyroCurrentAPY ] = useState (0);
+    const [rewardsEstimation, setRewardsEstimation] = useState(0);
     const [gyroPricePurchase, setGyroPricePurchase] = useState(0);
     const [gyroMarketPrice, setGyroMarketPrice] = useState(0);
+    const [potentialReturn, setPotentialReturn] = useState(0); 
     const [days, setDays] = useState(30);
     /**
        @ GET DATA FROM API
@@ -39,8 +42,8 @@ export default function Calculator() {
 
     const getdata = async () => {
         const data = await client.query(tokensQuery).toPromise()
-        setGyroCurrentAPY(Math.round(Number(data.data.protocolMetrics[0].currentAPY)).toFixed(1))
-        setGyroPrice(Math.round(Number(data.data.protocolMetrics[0].gyroPrice)).toFixed(2))
+        setGyroCurrentAPY(trim(Number(data.data.protocolMetrics[0].currentAPY), 1))
+        setGyroPrice(trim(Number(data.data.protocolMetrics[0].gyroPrice), 2))
     }
 
     useEffect(() => {
@@ -81,6 +84,22 @@ export default function Calculator() {
     const handleSlider = (e) => {
         setDays(e.target.value)
     }
+    const calcNewBalance = () => {
+        let value = parseFloat(gyroAPY) / 100;
+        value = Math.pow(value - 1, 1 / (365 * 3)) - 1 || 0;
+        let balance = Number(sGyroBalance);
+        for (let i = 0; i < days * 3; i++) {
+            balance += balance * value;
+        }
+        return balance;
+    };
+
+    useEffect(() => {
+        const newBalance = calcNewBalance();
+        setRewardsEstimation(trim(newBalance, 6));
+        const newPotentialReturn = newBalance * (parseFloat(gyroMarketPrice) || 0);
+        setPotentialReturn(trim(newPotentialReturn, 2));
+    }, [days, gyroAPY, sGyroBalance, gyroMarketPrice]);
     return (
         <>
             <Title>
@@ -189,7 +208,7 @@ export default function Calculator() {
                     alignItems="center"
                 >
                     <div>GYRO rewards estimate</div>
-                    <div>0 GYRO</div>
+                    <div>{rewardsEstimation} GYRO</div>
                 </StatusStake>
                 <StatusStake
                     direction="row"
@@ -197,7 +216,7 @@ export default function Calculator() {
                     alignItems="center"
                 >
                     <div>Projected return</div>
-                    <div>$0</div>
+                    <div>$ {potentialReturn}</div>
                 </StatusStake>
             </StackSection>
         </>
@@ -291,7 +310,7 @@ const StyledSlider = styled(SliderUnstyled)`
     display: block;
     position: absolute;
     width: 100%;
-    height: 6px;
+    height: 7px;
     border-radius: 6px;
     background-color: transparent;
     opacity: 0.38;
@@ -301,7 +320,7 @@ const StyledSlider = styled(SliderUnstyled)`
   & .MuiSlider-track {
     display: block;
     position: absolute;
-    height: 6px;
+    height: 7px;
     background: linear-gradient(90deg, #FF2680 4.22%, #932CE3 93.12%);
     border-radius: 10px;
   }
@@ -311,7 +330,7 @@ const StyledSlider = styled(SliderUnstyled)`
     width: 20px;
     height: 20px;
     margin-left: -6px;
-    margin-top: -7px;
+    margin-top: -6.5px;
     box-sizing: border-box;
     border-radius: 50%;
     outline: 0;
