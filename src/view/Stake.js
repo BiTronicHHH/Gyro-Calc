@@ -1,6 +1,7 @@
 import {
     StakeDetail,
-    Calculator
+    Calculator,
+    GetData
 } from '../components/stake'
 
 export default function Stake () {
@@ -8,6 +9,7 @@ export default function Stake () {
         <>
             <StakeDetail/>
             <Calculator/>
+            <GetData/>
         </>
     );
 }

@@ -20,14 +20,14 @@ function App() {
   };
 
   return (
-    <ThemeProvider theme={themeMode}>
-      <Container maxWidth="md">
-        <GlobalStyles />
-        <Header theme={theme}/>
-        <Routes/>
-        <Footer theme={theme} toggleTheme={toggleTheme}/>
-      </Container>
-    </ThemeProvider>
+      <ThemeProvider theme={themeMode}>
+        <Container maxWidth="md">
+          <GlobalStyles />
+          <Header theme={theme}/>
+          <Routes/>
+          <Footer theme={theme} toggleTheme={toggleTheme}/>
+        </Container>
+      </ThemeProvider>
   );
 }
 
