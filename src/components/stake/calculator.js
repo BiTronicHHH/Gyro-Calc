@@ -3,6 +3,7 @@ import axios from 'axios';
 import { createClient } from 'urql'
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
+import SliderUnstyled from '@mui/base/SliderUnstyled';
 import styled from 'styled-components';
 import './css/calculator.css';
 import InputGroup from './components/inputGroup';
@@ -18,7 +19,7 @@ export default function Calculator() {
     const [gyroCurrentAPY, setGyroCurrentAPY ] = useState (0);
     const [gyroPricePurchase, setGyroPricePurchase] = useState(0);
     const [gyroMarketPrice, setGyroMarketPrice] = useState(0);
-
+    const [days, setDays] = useState(30);
     /**
        @ GET DATA FROM API
     */
@@ -76,6 +77,9 @@ export default function Calculator() {
     }
     const handleGyroMarketPrice = () => {
         setGyroMarketPrice(gyroPrice);
+    }
+    const handleSlider = (e) => {
+        setDays(e.target.value)
     }
     return (
         <>
@@ -143,7 +147,16 @@ export default function Calculator() {
                 handleInput = {handleInput}
             />
 
-            <Slider/>
+            <SliderStackSection
+                mt={3}
+                pl={3}
+                pr={3}
+                pt={1}
+                pb={3}
+            >
+                <h3>{days} days</h3>
+                <StyledSlider defaultValue={30} max={365} min={1} step={1} onChange={handleSlider}/>
+            </SliderStackSection>
 
             <StackSection
                 direction="column"
@@ -247,5 +260,63 @@ const StatusStake = styled(Stack)`
       font-weight: 600;
       color: ${({theme}) => theme.greyText};
     }
+  }
+`
+const SliderStackSection = styled(Stack)`
+  background: ${({ theme }) => theme.section};
+  border-radius: 6px;
+  h3{
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 20px;
+  }
+  box-shadow: 0px 20px 40px rgb(57 57 57 / 3%);
+`
+const StyledSlider = styled(SliderUnstyled)`
+  color: #1976d2;
+  height: 4px;
+  width: 100%;
+  padding: 13px 0;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+  opacity: 0.75;
+  &:hover {
+    opacity: 1;
+  }
+
+  & .MuiSlider-rail {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 6px;
+    border-radius: 6px;
+    background-color: transparent;
+    opacity: 0.38;
+    border: 2px solid #cb96f4;
+  }
+
+  & .MuiSlider-track {
+    display: block;
+    position: absolute;
+    height: 6px;
+    background: linear-gradient(90deg, #FF2680 4.22%, #932CE3 93.12%);
+    border-radius: 10px;
+  }
+
+  & .MuiSlider-thumb {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    margin-left: -6px;
+    margin-top: -7px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    outline: 0;
+    border: 2px solid #932CE3;
+    background-color: #fff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
 `
