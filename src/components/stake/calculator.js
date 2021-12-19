@@ -109,6 +109,12 @@ function Calculator({gyroBalance}) {
         
     }, [ gyroCurrentAPY, gyroPrice]);
 
+    useEffect(() => {
+        setsGyroBalance(gyroBalance);
+    }, [gyroBalance]);
+
+    
+
     return (
         <>
             <Title>
