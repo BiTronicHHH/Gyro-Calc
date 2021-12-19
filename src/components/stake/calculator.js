@@ -88,6 +88,9 @@ function Calculator({gyroBalance}) {
         for (let i = 0; i < days * 3; i++) {
             balance += balance * value;
         }
+        if(days === 0){
+            balance = 0;
+        }
         return balance;
     };
 
