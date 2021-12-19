@@ -88,7 +88,7 @@ function Calculator({gyroBalance}) {
         for (let i = 0; i < days * 3; i++) {
             balance += balance * value;
         }
-        if(days === 0){
+        if(days == 0){
             balance = 0;
         }
         return balance;
@@ -100,16 +100,14 @@ function Calculator({gyroBalance}) {
         const newPotentialReturn = newBalance * (parseFloat(gyroMarketPrice) || 0);
         setPotentialReturn(trim(newPotentialReturn, 2));
         
+    }, [days, gyroAPY, sGyroBalance, gyroMarketPrice, gyroCurrentAPY, gyroPrice]);
+
+    useEffect(() => {
         setGyroAPY(trim(gyroCurrentAPY), 1)
         setGyroPricePurchase(gyroPrice)
         setGyroMarketPrice(gyroPrice)
         
-    }, [gyroCurrentAPY, gyroPrice]);
-
-    useEffect(() => {
-        setsGyroBalance(gyroBalance)
-    },[gyroBalance])
-    
+    }, [ gyroCurrentAPY, gyroPrice]);
 
     return (
         <>
