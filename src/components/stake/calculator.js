@@ -148,7 +148,7 @@ function Calculator({gyroBalance}) {
             <InputGroup
                 value={Number(sGyroBalance)}
                 button='Max'
-                title='sGYRO Balance: 15'
+                title={`sGYRO Balance: ${gyroBalance.toString()}`}
                 name='sGYRO'
                 handleButton = {handleGyroBalance}
                 handleInput = {handleInput}
