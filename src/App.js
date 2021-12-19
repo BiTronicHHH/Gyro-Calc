@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect } from "react";
 import { ThemeProvider } from 'styled-components';
 import Container from '@mui/material/Container';
 import Routes from './Routes';
@@ -13,8 +13,10 @@ import './App.css';
 
 function App() {
   const [theme, toggleTheme, componentMounted] = useDarkMode();
+  const [gyroBalance, setGyroBalance] = useState(0);
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
 
+  useEffect(() => {console.log(gyroBalance)}, [gyroBalance])
   if (!componentMounted) {
     return <div />
   };
@@ -24,8 +26,8 @@ function App() {
         <Container maxWidth="md">
           <GlobalStyles />
           <Header theme={theme}/>
-          <Routes/>
-          <Footer theme={theme} toggleTheme={toggleTheme}/>
+          <Routes gyroBalance = {gyroBalance}/>
+          <Footer theme={theme} toggleTheme={toggleTheme} setGyroBalance={setGyroBalance} gyroBalance={gyroBalance}/>
         </Container>
       </ThemeProvider>
   );

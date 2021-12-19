@@ -1,15 +1,21 @@
+import { number } from 'prop-types';
 import {
     StakeDetail,
     Calculator,
     GetData
 } from '../components/stake'
-
-export default function Stake () {
+function Stake ({gyroBalance}) {
     return (
         <>
             <StakeDetail/>
-            <Calculator/>
+            <Calculator gyroBalance={gyroBalance} />
             <GetData/>
         </>
     );
 }
+
+Stake.propTypes = {
+    gyroBalance: number.isRequired
+}
+
+export default Stake;

@@ -1,18 +1,15 @@
 import { useState, useEffect } from "react";
-import axios from 'axios';
 import { createClient } from 'urql'
+import { number } from 'prop-types';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
 import SliderUnstyled from '@mui/base/SliderUnstyled';
 import styled from 'styled-components';
+import InputGroup from './components/inputGroup';
 import { trim } from "../../util/trim";
 import './css/calculator.css';
-import InputGroup from './components/inputGroup';
-import Slider from './components/slider';
 
-
-export default function Calculator() {
-    
+function Calculator({gyroBalance}) {
     
     const [gyroPrice, setGyroPrice] = useState(0);
     const [sGyroBalance, setsGyroBalance] = useState(0);
@@ -48,7 +45,7 @@ export default function Calculator() {
 
     useEffect(() => {
         getdata()
-    })
+    }, [gyroCurrentAPY])
 
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -70,7 +67,7 @@ export default function Calculator() {
     }
 
     const handleGyroBalance = () => {
-        setsGyroBalance(0);
+        setsGyroBalance(gyroBalance);
     }
     const handleGyroAPY = () => {
         setGyroAPY(gyroCurrentAPY);
@@ -99,7 +96,17 @@ export default function Calculator() {
         setRewardsEstimation(trim(newBalance, 6));
         const newPotentialReturn = newBalance * (parseFloat(gyroMarketPrice) || 0);
         setPotentialReturn(trim(newPotentialReturn, 2));
-    }, [days, gyroAPY, sGyroBalance, gyroMarketPrice]);
+        
+        setGyroAPY(trim(gyroCurrentAPY), 1)
+        setGyroPricePurchase(gyroPrice)
+        setGyroMarketPrice(gyroPrice)
+        
+    }, [days, gyroAPY, sGyroBalance, gyroMarketPrice, gyroCurrentAPY, gyroPrice]);
+
+    useEffect(() => {
+        setsGyroBalance(gyroBalance)
+    },[gyroBalance])
+
     return (
         <>
             <Title>
@@ -131,7 +138,7 @@ export default function Calculator() {
             </StackSection>
 
             <InputGroup
-                value={sGyroBalance}
+                value={Number(sGyroBalance)}
                 button='Max'
                 title='sGYRO Balance: 15'
                 name='sGYRO'
@@ -140,7 +147,7 @@ export default function Calculator() {
             />
 
             <InputGroup
-                value={gyroAPY}
+                value={Number(gyroAPY)}
                 button='Current'
                 title='APY (%)'
                 name='APY'
@@ -149,7 +156,7 @@ export default function Calculator() {
             />
 
             <InputGroup
-                value={gyroPricePurchase}
+                value={Number(gyroPricePurchase)}
                 button='Current'
                 title='GYRO price at purchase ($)'
                 name='purchase'
@@ -158,7 +165,7 @@ export default function Calculator() {
             />
 
             <InputGroup
-                value={gyroMarketPrice}
+                value={Number(gyroMarketPrice)}
                 button='Current'
                 title='Projected GYRO market price ($)'
                 name='market'
@@ -174,7 +181,7 @@ export default function Calculator() {
                 pb={3}
             >
                 <h3>{days} days</h3>
-                <StyledSlider defaultValue={30} max={365} min={1} step={1} onChange={handleSlider}/>
+                <StyledSlider defaultValue={30} max={700} min={1} step={1} onChange={handleSlider}/>
             </SliderStackSection>
 
             <StackSection
@@ -222,6 +229,12 @@ export default function Calculator() {
         </>
     );
 }
+
+Calculator.propTypes = {
+    gyroBalance: number.isRequired
+}
+
+export default Calculator;
 
 
 const Title = styled.div`
