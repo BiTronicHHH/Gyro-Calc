@@ -104,11 +104,12 @@ function Calculator({gyroBalance}) {
         setGyroPricePurchase(gyroPrice)
         setGyroMarketPrice(gyroPrice)
         
-    }, [days, gyroAPY, sGyroBalance, gyroMarketPrice, gyroCurrentAPY, gyroPrice]);
+    }, [days, gyroAPY, sGyroBalance, gyroCurrentAPY, gyroPrice]);
 
     useEffect(() => {
         setsGyroBalance(gyroBalance)
     },[gyroBalance])
+    
 
     return (
         <>
