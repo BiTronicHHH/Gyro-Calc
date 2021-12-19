@@ -181,7 +181,7 @@ function Calculator({gyroBalance}) {
                 pb={3}
             >
                 <h3>{days} days</h3>
-                <StyledSlider defaultValue={30} max={700} min={1} step={1} onChange={handleSlider}/>
+                <StyledSlider defaultValue={30} max={700} min={0} step={1} onChange={handleSlider}/>
             </SliderStackSection>
 
             <StackSection
