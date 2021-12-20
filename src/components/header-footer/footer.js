@@ -17,7 +17,6 @@ const Footer = ({ theme, toggleTheme, setGyroBalance }) => {
     // Web3modal instance
     const [web3, setWeb3] = useState(0);
     const [web3Modal, setWeb3Modal] = useState(null);
-    const [walletConnected, setWalletConnected] = useState(false);
     const [accounts, setAccounts] = useState([]);
     const [tokenInstance, setTokenInstance] = useState(null);
     const [gyroToken, setGyroToken] = useState(0);
@@ -25,7 +24,6 @@ const Footer = ({ theme, toggleTheme, setGyroBalance }) => {
     // Chosen wallet provider given by the dialog window
     let [provider, setProvider] = useState(null);
     // Address of the selected account
-    let selectedAccount;
 
     /**
        @ Web3
@@ -73,7 +71,6 @@ const Footer = ({ theme, toggleTheme, setGyroBalance }) => {
         // If any current data is displayed when
         // the user is switching acounts in the wallet
         // immediate hide this data
-        setWalletConnected(false);
         // Disable button while UI is loading.
         // fetchAccountData() will take a while as it communicates
         // with Ethereum node via JSON-RPC and loads chain data
@@ -126,11 +123,6 @@ const Footer = ({ theme, toggleTheme, setGyroBalance }) => {
           await web3Modal.clearCachedProvider();
           setProvider(null);
         }
-      
-        selectedAccount = null;
-      
-        // Set the UI back to the initial state
-        setWalletConnected(false);
     }
 
     useEffect(()=>{
