@@ -66,7 +66,7 @@ const Header = ({ theme }) => {
                     alignItems="center"
                     spacing={1}
                 >
-                    <HeaderButton>Dash</HeaderButton>
+                    <HeaderButton>Dash!@#</HeaderButton>
                     <HeaderActiveButton>Stake</HeaderActiveButton>
                     <HeaderButton>Bond</HeaderButton>
                 </MenuStack>
