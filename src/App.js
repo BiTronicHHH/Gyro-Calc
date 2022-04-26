@@ -18,9 +18,7 @@ function App() {
 
   useEffect(() => {console.log(gyroBalance)}, [gyroBalance])
   if (!componentMounted) {
-    
     return <div />
-
   };
 
   return (
